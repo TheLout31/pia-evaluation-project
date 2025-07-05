@@ -1,17 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "../Contexts/TaskContext";
 import "../Tasks.css";
+import { useDispatch, useSelector } from "react-redux";
 const Tasks = () => {
-  const { tasks, addTask, toggleTask } = useContext(TaskContext);
+  // const { tasks, addTask, toggleTask } = useContext(TaskContext);
   const [data, setData] = useState({
     title: "",
     description: "",
   });
   const inputTitle = useRef();
+  const tasks = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const handleAdd = () => {
     if (data.title.trim()) {
-      addTask(data);
+      dispatch({
+        type: "ADD_TASK",
+        title: data.title,
+        description: data.description,
+      });
       setData({ title: "", description: "" });
     }
   };
@@ -63,11 +70,12 @@ const Tasks = () => {
             <p>No tasks yet! Add one to get started.</p>
           </>
         ) : (
-          tasks.map((task) => (
+          tasks.map((task, idx) => (
             <div
               key={task.id}
+              
               className={`task-card ${task.completed ? "completed" : ""}`}
-              onClick={() => toggleTask(task.id)}
+              onClick={() => dispatch({ type: "TOGGLE_TASK", id: task.id })}
             >
               <h3>{task.title}</h3>
               <p>{task.description}</p>

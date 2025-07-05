@@ -1,17 +1,19 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
 
-  const addTask = ({title,description}) => {
+
+  const addTask = ({ title, description }) => {
     const newTask = {
       id: Date.now(),
       title,
       description,
       completed: false,
     };
+
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
