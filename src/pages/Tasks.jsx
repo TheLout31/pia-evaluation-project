@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { TaskContext } from "../Contexts/TaskContext";
+import { ADD_TASK, TOGGLE_TASK } from "../Redux/Reducers/taskSlice";
 import "../Tasks.css";
 import { useDispatch, useSelector } from "react-redux";
 const Tasks = () => {
@@ -9,16 +9,12 @@ const Tasks = () => {
     description: "",
   });
   const inputTitle = useRef();
-  const tasks = useSelector((state) => state);
+  const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
 
   const handleAdd = () => {
     if (data.title.trim()) {
-      dispatch({
-        type: "ADD_TASK",
-        title: data.title,
-        description: data.description,
-      });
+      dispatch(ADD_TASK({ title: data.title, description: data.description }));
       setData({ title: "", description: "" });
     }
   };
@@ -73,9 +69,8 @@ const Tasks = () => {
           tasks.map((task, idx) => (
             <div
               key={task.id}
-              
               className={`task-card ${task.completed ? "completed" : ""}`}
-              onClick={() => dispatch({ type: "TOGGLE_TASK", id: task.id })}
+              onClick={() => dispatch(TOGGLE_TASK(task.id))}
             >
               <h3>{task.title}</h3>
               <p>{task.description}</p>

@@ -5,6 +5,7 @@ import Tasks from "./pages/Tasks";
 import About from "./pages/About";
 import "./App.css";
 import { TaskProvider } from "./Contexts/TaskContext";
+import Blogs from "./pages/Blogs";
 const App = () => {
   function Navbar() {
     return (
@@ -14,6 +15,9 @@ const App = () => {
         </Link>
         <Link to="/tasks" className="nav-link">
           Tasks
+        </Link>
+        <Link to="/blogs" className="nav-link">
+          Blogs
         </Link>
         <Link to="/about" className="nav-link">
           About
@@ -28,6 +32,7 @@ const App = () => {
         <Route path="/" element={<Welcome />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/about" element={<About />} />
+        <Route path="/blogs" element={<Blogs />} />
       </Routes>
     </>
   );
